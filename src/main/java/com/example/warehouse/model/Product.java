@@ -1,8 +1,11 @@
-package com.example.elasticsearch.model;
+package com.example.warehouse.model;
 
 import jakarta.persistence.*;
 import java.util.List;
 
+/**
+ * Entity class representing a product.
+ */
 @Entity
 @Table(name = "products")
 public class Product {
@@ -14,23 +17,16 @@ public class Product {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String description;
 
     @Column(nullable = false)
-    private boolean active;
+    private Boolean active;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SKU> skus;
 
-    // Constructors, getters, and setters
-    public Product() {}
-
-    public Product(String name, String description, boolean active) {
-        this.name = name;
-        this.description = description;
-        this.active = active;
-    }
-
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -55,11 +51,11 @@ public class Product {
         this.description = description;
     }
 
-    public boolean isActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 
@@ -71,4 +67,3 @@ public class Product {
         this.skus = skus;
     }
 }
-
