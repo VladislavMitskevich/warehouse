@@ -1,13 +1,15 @@
 package com.example.warehouse.dto;
 
+import java.math.BigDecimal;
+
 /**
- * Data Transfer Object (DTO) for Product.
+ * Data Transfer Object for Product.
  */
 public class ProductDTO {
     private Long id;
     private String name;
     private String description;
-    private boolean active;
+    private BigDecimal price;
 
     // Getters and setters
     public Long getId() {
@@ -34,11 +36,11 @@ public class ProductDTO {
         this.description = description;
     }
 
-    public boolean isActive() {
-        return active;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 }
