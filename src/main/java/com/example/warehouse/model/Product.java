@@ -1,7 +1,8 @@
-package com.example.warehouse.model;
+package com.example.warehouse.model.;
+
 
 import jakarta.persistence.*;
-import java.util.List;
+import java.math.BigDecimal;
 
 /**
  * Entity class representing a product.
@@ -9,24 +10,15 @@ import java.util.List;
 @Entity
 @Table(name = "products")
 public class Product {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String name;
-
-    @Column(nullable = false)
     private String description;
+    private BigDecimal price;
 
-    @Column(nullable = false)
-    private Boolean active;
-
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<SKU> skus;
-
-    // Getters and Setters
+    // Getters and setters
     public Long getId() {
         return id;
     }
@@ -51,19 +43,11 @@ public class Product {
         this.description = description;
     }
 
-    public Boolean getActive() {
-        return active;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public List<SKU> getSkus() {
-        return skus;
-    }
-
-    public void setSkus(List<SKU> skus) {
-        this.skus = skus;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 }
