@@ -4,7 +4,7 @@ import com.example.warehouse.dto.SKUDTO;
 import java.util.List;
 
 /**
- * Service interface for managing SKUs.
+ * Interface for SKU service to handle SKU-related operations.
  */
 public interface SKUService {
 
@@ -14,22 +14,22 @@ public interface SKUService {
      * @param skuDto the SKU data transfer object.
      * @return the created SKU as a DTO.
      */
-    SKUDTO createSku(SKUDTO skuDto);
+    SKUDTO createSKU(SKUDTO skuDto);
 
     /**
      * Retrieves an SKU by its ID.
      *
      * @param id the ID of the SKU.
-     * @return the SKU as a DTO.
+     * @return the corresponding SKU DTO.
      */
-    SKUDTO getSkuById(Long id);
+    SKUDTO getSKUById(Long id);
 
     /**
      * Retrieves all SKUs.
      *
-     * @return a list of SKU DTOs.
+     * @return a list of all SKU DTOs.
      */
-    List<SKUDTO> getAllSkus();
+    List<SKUDTO> getAllSKUs();
 
     /**
      * Updates an existing SKU.
@@ -38,12 +38,12 @@ public interface SKUService {
      * @param skuDto the updated SKU data transfer object.
      * @return the updated SKU as a DTO.
      */
-    SKUDTO updateSku(Long id, SKUDTO skuDto);
+    SKUDTO updateSKU(Long id, SKUDTO skuDto);
 
     /**
      * Deletes an SKU by its ID.
      *
      * @param id the ID of the SKU to delete.
      */
-    void deleteSku(Long id);
+    void deleteSKU(Long id);
 }
