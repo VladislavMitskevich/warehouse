@@ -7,11 +7,12 @@ import com.example.warehouse.model.Product;
 import com.example.warehouse.repository.ProductRepository;
 import com.example.warehouse.service.ProductService;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Service implementation for managing products.
+ * Implementation of the ProductService interface.
  */
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -33,9 +34,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO getProductById(Long id) {
-        return productRepository.findById(id)
-                .map(productMapper::toDto)
-                .orElseThrow(() -> new ResourceNotFoundException("Product with ID " + id + " not found"));
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with id " + id));
+        return productMapper.toDto(product);
     }
 
     @Override
@@ -48,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDTO updateProduct(Long id, ProductDTO productDto) {
         Product existingProduct = productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Product with ID " + id + " not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with id " + id));
 
         existingProduct.setName(productDto.getName());
         existingProduct.setDescription(productDto.getDescription());
@@ -60,9 +61,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProduct(Long id) {
-        Product existingProduct = productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Product with ID " + id + " not found"));
-
-        productRepository.delete(existingProduct);
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with id " + id));
+        productRepository.delete(product);
     }
 }
