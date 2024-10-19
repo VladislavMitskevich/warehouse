@@ -5,6 +5,7 @@ import com.example.warehouse.exception.ResourceNotFoundException;
 import com.example.warehouse.mapper.ProductMapper;
 import com.example.warehouse.model.Product;
 import com.example.warehouse.repository.ProductRepository;
+import com.example.warehouse.repository.ProductSearchRepository;
 import com.example.warehouse.service.ProductService;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +21,13 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
 
-    public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper) {
+    private final ProductSearchRepository productSearchRepository;
+
+    public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper,
+                              ProductSearchRepository productSearchRepository) {
         this.productRepository = productRepository;
         this.productMapper = productMapper;
+        this.productSearchRepository = productSearchRepository;
     }
 
     @Override
@@ -65,4 +70,13 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found with id " + id));
         productRepository.delete(product);
     }
+
+    @Override
+    public List<ProductDTO> searchProductsByName(String name) {
+        List<Product> products = productSearchRepository.findByNameContaining(name);
+        return products.stream()
+                .map(productMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
 }

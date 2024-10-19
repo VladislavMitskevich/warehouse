@@ -50,4 +50,11 @@ public class ProductController {
         productService.deleteProduct(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ProductDTO>> searchProductsByName(@RequestParam String name) {
+        List<ProductDTO> products = productService.searchProductsByName(name);
+        return ResponseEntity.ok(products);
+    }
+
 }

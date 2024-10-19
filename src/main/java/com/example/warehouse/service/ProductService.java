@@ -46,4 +46,12 @@ public interface ProductService {
      * @param id the ID of the product to delete.
      */
     void deleteProduct(Long id);
+
+    /**
+     * Searches for products by name in Elasticsearch.
+     *
+     * @param name the keyword to search for.
+     * @return a list of product DTOs that match the search criteria.
+     */
+    List<ProductDTO> searchProductsByName(String name);
 }
