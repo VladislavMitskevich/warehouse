@@ -1,7 +1,6 @@
 package com.example.warehouse.service;
 
-import com.example.warehouse.model.SKU;
-
+import com.example.warehouse.dto.SKUDTO;
 import java.util.List;
 
 /**
@@ -10,25 +9,41 @@ import java.util.List;
 public interface SKUService {
 
     /**
-     * Gets all available SKUs.
+     * Creates a new SKU.
      *
-     * @return a list of available SKUs.
+     * @param skuDto the SKU data transfer object.
+     * @return the created SKU as a DTO.
      */
-    List<SKU> getAllAvailableSKUs();
+    SKUDTO createSku(SKUDTO skuDto);
 
     /**
-     * Saves or updates an SKU.
+     * Retrieves an SKU by its ID.
      *
-     * @param sku - the SKU to save or update.
-     * @return the saved or updated SKU.
+     * @param id the ID of the SKU.
+     * @return the SKU as a DTO.
      */
-    SKU saveSKU(SKU sku);
+    SKUDTO getSkuById(Long id);
 
     /**
-     * Finds an SKU by its ID.
+     * Retrieves all SKUs.
      *
-     * @param id - the ID of the SKU.
-     * @return the SKU with the specified ID.
+     * @return a list of SKU DTOs.
      */
-    SKU getSKUById(Long id);
+    List<SKUDTO> getAllSkus();
+
+    /**
+     * Updates an existing SKU.
+     *
+     * @param id the ID of the SKU to update.
+     * @param skuDto the updated SKU data transfer object.
+     * @return the updated SKU as a DTO.
+     */
+    SKUDTO updateSku(Long id, SKUDTO skuDto);
+
+    /**
+     * Deletes an SKU by its ID.
+     *
+     * @param id the ID of the SKU to delete.
+     */
+    void deleteSku(Long id);
 }
