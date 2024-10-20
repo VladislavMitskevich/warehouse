@@ -1,11 +1,11 @@
 package com.example.warehouse.model;
 
-
 import jakarta.persistence.*;
-import java.math.BigDecimal;
+
+import java.util.List;
 
 /**
- * Entity class representing a product.
+ * Entity representing a product.
  */
 @Entity
 @Table(name = "products")
@@ -16,9 +16,13 @@ public class Product {
 
     private String name;
     private String description;
-    private BigDecimal price;
+    private boolean active;
 
-    // Getters and setters
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SKU> skus;
+
+    // Getters and Setters
+
     public Long getId() {
         return id;
     }
@@ -43,11 +47,19 @@ public class Product {
         this.description = description;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public List<SKU> getSkus() {
+        return skus;
+    }
+
+    public void setSkus(List<SKU> skus) {
+        this.skus = skus;
     }
 }

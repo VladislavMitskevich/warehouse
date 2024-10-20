@@ -2,29 +2,13 @@ package com.example.warehouse.mapper;
 
 import com.example.warehouse.dto.SKUDTO;
 import com.example.warehouse.model.SKU;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
 
 /**
- * Mapper for converting between SKU entity and SKUDTO.
+ * Mapper interface for converting SKU entity to SKUDTO and vice versa.
  */
-@Component
-public class SKUMapper {
-
-    public SKU toEntity(SKUDTO skuDto) {
-        SKU sku = new SKU();
-        sku.setId(skuDto.getId());
-        sku.setPrice(skuDto.getPrice());
-        sku.setStockQuantity(skuDto.getStockQuantity());
-        return sku;
-    }
-
-    public SKUDTO toDto(SKU sku) {
-        SKUDTO skuDto = new SKUDTO();
-        skuDto.setId(sku.getId());
-        skuDto.setProductId(sku.getProduct().getId());
-        skuDto.setPrice(sku.getPrice());
-        skuDto.setStockQuantity(sku.getStockQuantity());
-        return skuDto;
-    }
+@Mapper(componentModel = "spring")
+public interface SKUMapper {
+    SKUDTO toDTO(SKU sku);
+    SKU toEntity(SKUDTO skuDTO);
 }
-

@@ -1,16 +1,11 @@
 package com.example.warehouse.service;
 
-import java.io.IOException;
+import java.util.List;
 
 /**
- * Interface for Elasticsearch service to handle data loading operations.
+ * Service interface for interacting with Elasticsearch.
  */
 public interface ElasticsearchService {
-
-    /**
-     * Loads data from the database to Elasticsearch.
-     *
-     * @throws IOException if there is an error during the data loading process.
-     */
-    void loadDataToElasticsearch() throws IOException;
+    List<Object> searchProducts(String query);
+    void loadDataToElasticsearch();
 }

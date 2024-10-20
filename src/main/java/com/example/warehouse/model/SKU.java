@@ -1,10 +1,10 @@
 package com.example.warehouse.model;
 
 import jakarta.persistence.*;
-import java.math.BigDecimal;
+
 
 /**
- * Entity class representing a Stock Keeping Unit (SKU).
+ * Entity representing a Stock Keeping Unit (SKU).
  */
 @Entity
 @Table(name = "skus")
@@ -13,14 +13,16 @@ public class SKU {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String name;
+    private String color;
+    private boolean available;
+
     @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "product_id")
     private Product product;
 
-    private BigDecimal price;
-    private int stockQuantity;
+    // Getters and Setters
 
-    // Getters and setters
     public Long getId() {
         return id;
     }
@@ -29,27 +31,35 @@ public class SKU {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
     public Product getProduct() {
         return product;
     }
 
     public void setProduct(Product product) {
         this.product = product;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public int getStockQuantity() {
-        return stockQuantity;
-    }
-
-    public void setStockQuantity(int stockQuantity) {
-        this.stockQuantity = stockQuantity;
     }
 }

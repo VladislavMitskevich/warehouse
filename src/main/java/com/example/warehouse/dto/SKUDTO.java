@@ -1,17 +1,16 @@
 package com.example.warehouse.dto;
 
-import java.math.BigDecimal;
-
 /**
- * Data Transfer Object for SKU (Stock Keeping Unit).
+ * Data Transfer Object for SKU entity.
  */
 public class SKUDTO {
     private Long id;
-    private Long productId;
-    private BigDecimal price;
-    private int stockQuantity;
+    private String name;
+    private String color;
+    private boolean available;
 
-    // Getters and setters
+    // Getters and Setters
+
     public Long getId() {
         return id;
     }
@@ -20,27 +19,27 @@ public class SKUDTO {
         this.id = id;
     }
 
-    public Long getProductId() {
-        return productId;
+    public String getName() {
+        return name;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public String getColor() {
+        return color;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setColor(String color) {
+        this.color = color;
     }
 
-    public int getStockQuantity() {
-        return stockQuantity;
+    public boolean isAvailable() {
+        return available;
     }
 
-    public void setStockQuantity(int stockQuantity) {
-        this.stockQuantity = stockQuantity;
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 }

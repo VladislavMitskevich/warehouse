@@ -1,21 +1,23 @@
-# src/main/resources/application.yml
+# Конфигурация Spring Data Source
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/warehouse_db
-    username: postgres
-    password: your_password
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/warehouse_db  # URL для подключения к базе данных PostgreSQL
+    username: postgres  # Имя пользователя для подключения к базе данных
+    password: your_password  # Пароль для подключения к базе данных
+    driver-class-name: org.postgresql.Driver  # Класс драйвера для PostgreSQL
   jpa:
     hibernate:
-      ddl-auto: update
-    show-sql: true
+      ddl-auto: update  # Автоматическое обновление схемы базы данных при запуске приложения
+    show-sql: true  # Показывать SQL-запросы в логах
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect  # Диалект Hibernate для PostgreSQL
 
+# Конфигурация Elasticsearch
 elasticsearch:
   rest:
-    uris: http://localhost:9200
+    uris: http://localhost:9200  # URL для подключения к Elasticsearch
 
+# Конфигурация сервера
 server:
-  port: 8080
+  port: 8080  # Порт, на котором будет работать приложение

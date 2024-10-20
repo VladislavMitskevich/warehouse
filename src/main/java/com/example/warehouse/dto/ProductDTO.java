@@ -1,6 +1,6 @@
 package com.example.warehouse.dto;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Data Transfer Object for Product.
@@ -9,9 +9,11 @@ public class ProductDTO {
     private Long id;
     private String name;
     private String description;
-    private BigDecimal price;
+    private boolean active;
+    private List<SKUDTO> skus;
 
-    // Getters and setters
+    // Getters and Setters
+
     public Long getId() {
         return id;
     }
@@ -36,11 +38,19 @@ public class ProductDTO {
         this.description = description;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public List<SKUDTO> getSkus() {
+        return skus;
+    }
+
+    public void setSkus(List<SKUDTO> skus) {
+        this.skus = skus;
     }
 }

@@ -1,60 +1,54 @@
 package com.example.warehouse.service.impl;
 
-import com.example.warehouse.mapper.ProductMapper;
-import com.example.warehouse.mapper.SKUMapper;
 import com.example.warehouse.model.Product;
-import com.example.warehouse.model.SKU;
 import com.example.warehouse.repository.ProductRepository;
-import com.example.warehouse.repository.SKURepository;
 import com.example.warehouse.service.ElasticsearchService;
-import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.xcontent.XContentType;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- * Implementation of the ElasticsearchService interface.
+ * Service implementation for managing interactions with Elasticsearch.
  */
 @Service
 public class ElasticsearchServiceImpl implements ElasticsearchService {
-
-    private final RestHighLevelClient elasticsearchClient;
+    private final RestHighLevelClient client;
     private final ProductRepository productRepository;
-    private final SKURepository skuRepository;
-    private final ProductMapper productMapper;
-    private final SKUMapper skuMapper;
 
-    public ElasticsearchServiceImpl(RestHighLevelClient elasticsearchClient, ProductRepository productRepository, SKURepository skuRepository, ProductMapper productMapper, SKUMapper skuMapper) {
-        this.elasticsearchClient = elasticsearchClient;
+    public ElasticsearchServiceImpl(RestHighLevelClient client, ProductRepository productRepository) {
+        this.client = client;
         this.productRepository = productRepository;
-        this.skuRepository = skuRepository;
-        this.productMapper = productMapper;
-        this.skuMapper = skuMapper;
     }
 
     @Override
-    public void loadDataToElasticsearch() throws IOException {
-        List<Product> products = productRepository.findAll();
-        for (Product product : products) {
-            IndexRequest indexRequest = new IndexRequest("products")
-                    .id(product.getId().toString())
-                    .source(productMapper.toDto(product), XContentType.JSON);
-            IndexResponse indexResponse = elasticsearchClient.index(indexRequest, RequestOptions.DEFAULT);
-            System.out.println("Indexed product with ID: " + indexResponse.getId());
-        }
+    public List<Object> searchProducts(String query) {
+        try {
+            SearchRequest searchRequest = new SearchRequest("products");
+            SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+            sourceBuilder.query(QueryBuilders.multiMatchQuery(query, "name", "description", "skus.name"));
+            searchRequest.source(sourceBuilder);
 
-        List<SKU> skus = skuRepository.findAll();
-        for (SKU sku : skus) {
-            IndexRequest indexRequest = new IndexRequest("skus")
-                    .id(sku.getId().toString())
-                    .source(skuMapper.toDto(sku), XContentType.JSON);
-            IndexResponse indexResponse = elasticsearchClient.index(indexRequest, RequestOptions.DEFAULT);
-            System.out.println("Indexed SKU with ID: " + indexResponse.getId());
+            SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+            return List.of(searchResponse.getHits().getHits())
+                    .stream()
+                    .map(hit -> hit.getSourceAsMap())
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            throw new RuntimeException("Error executing search", e);
         }
+    }
+
+    @Override
+    public void loadDataToElasticsearch() {
+        // Implementation to load data from database to Elasticsearch.
     }
 }
